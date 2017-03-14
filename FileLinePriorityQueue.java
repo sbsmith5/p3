@@ -27,9 +27,6 @@ public class FileLinePriorityQueue implements MinPriorityQueueADT<FileLine> {
 		queue[0] = null;
 		numItems--;
 		return temp;
-		
-		
-
 		//return null;
     }
 
@@ -38,13 +35,13 @@ public class FileLinePriorityQueue implements MinPriorityQueueADT<FileLine> {
 		int i = 0;
 		while (queue[i] != null) i++;
 		queue[i] = fl;
-		for (int j = i; j < maxSize; j++) {
+		for (int j = i+1; j < numItems; j++) {
 			if (cmp.compare(queue[i], queue[j]) < 0) {
 				FileLine temp = queue[i];
 				queue[i] = queue[j];
 				queue[j] = temp;
 				i++;
-				j++;
+				// j < maxSize with break at queue[j] == null
 			}
 			else break;
 			}
