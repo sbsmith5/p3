@@ -6,6 +6,7 @@
 // TEAM:    we need a team name still guys
 // Authors: 
 // Author1: (Aleysha Becker,ambecker5@wisc.edu,ambecker5,001)
+// Author2: (Sidney Smith,sbsmith5@wisc.edu,sbsmith5,001)
 //
 // ---------------- OTHER ASSISTANCE CREDITS 
 //////////////////////////// 80 columns wide //////////////////////////////////
