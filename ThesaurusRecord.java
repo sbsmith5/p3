@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
@@ -5,15 +6,16 @@ import java.util.Comparator;
  */
 
 public class ThesaurusRecord extends Record{
-    // TODO declare data structures required
+    private String key;
+    private ArrayList<String> synonyms;
 
 	/**
 	 * Constructs a new ThesaurusRecord by passing the parameter to the parent constructor
 	 * and then calling the clear method()
 	 */
     public ThesaurusRecord(int numFiles) {
-	super(numFiles);
-	clear();
+    	super(numFiles);
+    	clear();
     }
 
     /**
@@ -24,9 +26,9 @@ public class ThesaurusRecord extends Record{
 	 */
 	private class ThesaurusLineComparator implements Comparator<FileLine> {
 		public int compare(FileLine l1, FileLine l2) {
-			// TODO implement compare() functionality
-
-			return 0;
+			String l1Key = l1.getString().split(":")[0];
+			String l2Key = l2.getString().split(":")[0];
+			return l1Key.compareTo(l2Key);
 		}
 		
 		public boolean equals(Object o) {
@@ -45,7 +47,8 @@ public class ThesaurusRecord extends Record{
 	 * This method should (1) set the word to null and (2) empty the list of synonyms.
 	 */
     public void clear() {
-		// TODO initialize/reset data members
+		key = null;
+		synonyms.clear();
     }
 	
 	/**
@@ -53,14 +56,39 @@ public class ThesaurusRecord extends Record{
 	 * which are not already found in this ThesaurusRecord's list of synonyms.
 	 */
     public void join(FileLine w) {
-		// TODO implement join() functionality
+    	if (this.isCleared()) {
+    		key = w.getString().split(":")[0];
+    		String fileLineString = w.getString().split(":")[1];
+    		String[] newSynonyms = fileLineString.split(",");
+    		for (int i = 0; i < newSynonyms.length; i++) synonyms.add(newSynonyms[i]); 
+    	}
+    	else {
+			String fileLineString = w.getString();
+			fileLineString = fileLineString.split(":")[1];
+			String[] newSynonyms = fileLineString.split(",");
+			for (int i = 0; i < newSynonyms.length; i++) {
+				for (String s : synonyms) {
+					if (newSynonyms[i].compareTo(s) == 0) break;
+					else if (newSynonyms[i].compareTo(s) > 0) continue;
+					else if (newSynonyms[i].compareTo(s) < 0) synonyms.add(synonyms.indexOf(s), newSynonyms[i]);
+				}
+			}
+    	}
+    	/// this assumes that the method calling join will have already checked that the keys matched ***
     }
 	
 	/**
 	 * See the assignment description and example runs for the exact output format.
 	 */
     public String toString() {
-		// TODO
-		return null;
+		String output = "";
+		output += key + ":";
+		for (String s : synonyms)
+			output+= s + ",";
+		return output;
 	}
+    
+    private boolean isCleared() {
+    	return (key == null && synonyms.size() == 0);
+    }
 }
