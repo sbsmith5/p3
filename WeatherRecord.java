@@ -5,6 +5,7 @@
 //
 // TEAM:    (Team 17, NEED TEAM NAME)
 // Author1: (Sidney Smith,sbsmith5@wisc.edu,sbsmith5,001)
+// Author2: (Aleysha Becker,ambecker5@wisc.edu,ambecker5,001)
 //
 // ---------------- OTHER ASSISTANCE CREDITS
 // Persons: N/A

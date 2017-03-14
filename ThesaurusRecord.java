@@ -6,6 +6,7 @@
 // TEAM:    Team 17
 // Authors: 
 // Author1: (Aleysha Becker,ambecker5@wisc.edu,ambecker5,001)
+// Author2: (Sidney Smith,sbsmith5@wisc.edu,sbsmith5,001)
 //
 //////////////////////////// 80 columns wide //////////////////////////////////
 import java.util.ArrayList;
