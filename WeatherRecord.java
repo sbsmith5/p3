@@ -12,6 +12,7 @@
 // Online sources:N/A
 //////////////////////////// 80 columns wide //////////////////////////////////
 
+import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
@@ -23,9 +24,10 @@ public class WeatherRecord extends Record{
     // TODO declare data structures required
 	String[] lineFile1;
 	String[] lineFile2;
-	int Station;
-	int Date;
-	double[] readings;
+	private int station;
+	int date;
+	//double[] readings;
+	private ArrayList<String> readings;
 	
 
 	/**
@@ -94,6 +96,18 @@ public class WeatherRecord extends Record{
 	 */
     public void join(FileLine li) {
 		// TODO implement join() functionality
+    	
+    	//create an array of the strings in FileLine li
+    	String[] line = li.getString().split(",");
+    	
+    	//assign the station and date
+    	this.station = Integer.parseInt(line[0]);
+    	this.date = Integer.parseInt(line[1]);
+    	
+    	//add the readings to the weather record for this station and date
+    	for (int i = 2; i<line.length; i++)
+    		this.readings.add(line[i]);
+    	
     }
 	
 	/**
