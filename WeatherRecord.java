@@ -1,12 +1,32 @@
+/////////////////////////////////////////////////////////////////////////////
+// Semester:         CS367 Spring 2016
+// PROJECT:          Program2
+// FILE:             GameApp.java
+//
+// TEAM:    (Team 17, NEED TEAM NAME)
+// Author1: (Sidney Smith,sbsmith5@wisc.edu,sbsmith5,001)
+//
+// ---------------- OTHER ASSISTANCE CREDITS
+// Persons: N/A
+//
+// Online sources:N/A
+//////////////////////////// 80 columns wide //////////////////////////////////
+
 import java.util.Comparator;
 
 /**
  * The WeatherRecord class is the child class of Record to be used when merging weather data. Station and Date
  * store the station and date associated with each weather reading that this object stores.
- * l stores the weather readings, in the same order as the files from which they came are indexed.
+ * readings stores the weather readings, in the same order as the files from which they came are indexed.
  */
 public class WeatherRecord extends Record{
     // TODO declare data structures required
+	String[] lineFile1;
+	String[] lineFile2;
+	int Station;
+	int Date;
+	double[] readings;
+	
 
 	/**
 	 * Constructs a new WeatherRecord by passing the parameter to the parent constructor
@@ -24,8 +44,24 @@ public class WeatherRecord extends Record{
     private class WeatherLineComparator implements Comparator<FileLine> {
 		public int compare(FileLine l1, FileLine l2) {
 			// TODO implement compare() functionality
+			//split the first line in order to access station and date information
+			String[] lineFile1 = l1.getString().split(",");
+			String[] lineFile2 = l2.getString().split(",");
 			
-			return 0;
+			//assign station information in order to compare
+			Integer station1 = Integer.parseInt(lineFile1[0]);
+			Integer station2 = Integer.parseInt(lineFile2[0]);
+			
+			//check to see if the stations are the same. If so, return the compared dates.
+			if (station1.equals(station2)){
+				Integer date1 = Integer.parseInt(lineFile1[1]);
+				Integer date2 = Integer.parseInt(lineFile2[1]);
+				
+				return date1.compareTo(date2);
+			}
+			else{
+				return station1.compareTo(station2);
+			}
 		}
 		
 		public boolean equals(Object o) {
