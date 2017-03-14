@@ -1,3 +1,14 @@
+/////////////////////////////////////////////////////////////////////////////
+// Semester:         CS367 Spring 2016 
+// PROJECT:          p3
+// FILE:             FileLinePriorityQueue
+//
+// TEAM:    we need a team name still guys
+// Authors: 
+// Author1: (Aleysha Becker,ambecker5@wisc.edu,ambecker5,001)
+//
+// ---------------- OTHER ASSISTANCE CREDITS 
+//////////////////////////// 80 columns wide //////////////////////////////////
 import java.util.Comparator;
 
 /**

@@ -1,3 +1,13 @@
+/////////////////////////////////////////////////////////////////////////////
+// Semester:         CS367 Spring 2016 
+// PROJECT:          p3
+// FILE:             ThesaurusRecord.java
+//
+// TEAM:    Team 17
+// Authors: 
+// Author1: (Aleysha Becker,ambecker5@wisc.edu,ambecker5,001)
+//
+//////////////////////////// 80 columns wide //////////////////////////////////
 import java.util.ArrayList;
 import java.util.Comparator;
 
