@@ -28,7 +28,7 @@ public class WeatherRecord extends Record{
 	private int station;
 	int date;
 	//double[] readings;
-	private ArrayList<String> readings;
+	private ArrayList<Double> readings;
 	
 
 	/**
@@ -86,6 +86,8 @@ public class WeatherRecord extends Record{
 	 */
     public void clear() {
 		// TODO initialize/reset data members
+    	for (int i=0; i<readings.size(); i++)
+    		readings.set(i, Double.MIN_VALUE);
     }
 
 	/**
@@ -107,7 +109,7 @@ public class WeatherRecord extends Record{
     	
     	//add the readings to the weather record for this station and date
     	for (int i = 2; i<line.length; i++)
-    		this.readings.add(line[i]);
+    		this.readings.add(Double.parseDouble(line[i]));
     	
     }
 	
