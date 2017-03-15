@@ -41,6 +41,8 @@ public class Reducer {
 	 * Carries out the file merging algorithm described in the assignment description. 
 	 */
     public void run() {
+    	
+    	
 		File dir = new File(dirName);
 		File[] files = dir.listFiles();
 		Arrays.sort(files);
@@ -49,15 +51,16 @@ public class Reducer {
 
 		// list of files for stocking the PQ
 		fileList = new ArrayList<FileIterator>();
-
+		
 		for(int i = 0; i < files.length; i++) {
+			//System.out.println(files[i].getAbsolutePath()); /*Check if correct files debugging*/
 			File f = files[i];
 			if(f.isFile() && f.getName().endsWith(".txt")) {
 				fileList.add(new FileIterator(f.getAbsolutePath(), i));
 			}
 		}
 
-		switch (type) {
+	switch (type) {
 		case "weather":
 			r = new WeatherRecord(fileList.size());
 			break;
@@ -68,7 +71,26 @@ public class Reducer {
 			System.out.println("Invalid type of data! " + type);
 			System.exit(1);
 		}
+	
+	writeToFile(fileList);
 
-		// TODO
     }
+    
+    /*This method writes to the file output*/
+    public void writeToFile(List<FileIterator> files){
+    	
+    	File output;
+    	FileWriter writer;
+    	
+    	try{
+    		output = new File(outFile);
+    		writer = new FileWriter(output);
+    	}catch(Exception e){
+    		System.out.println("IOE Exception thrown");
+    	}
+    	
+    	//TODO Write method that calls join and writes to file
+    	
+    }
+    
 }

@@ -1,2 +1,2 @@
-bad:naughty,unfavorable
-good:acceptable,favorable,quality
+bad:naughty,unfavorable,testerTESTERtester
+good:acceptable,favorable,quality,

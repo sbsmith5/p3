@@ -17,15 +17,21 @@ import java.util.Comparator;
  */
 
 public class ThesaurusRecord extends Record{
-    private String key;
+    private String key;					//word to find synonyms
     private ArrayList<String> synonyms;
+
 
 	/**
 	 * Constructs a new ThesaurusRecord by passing the parameter to the parent constructor
 	 * and then calling the clear method()
 	 */
     public ThesaurusRecord(int numFiles) {
-    	super(numFiles);
+    	
+    	//Note super(numFiles); creates new object which is then lost
+    	
+    	super.numFiles = numFiles;	//TODO Note to do this we change
+    	//to change visibility of int to protected are we allowed to change this
+    	
     	clear();
     }
 
@@ -36,6 +42,7 @@ public class ThesaurusRecord extends Record{
 	 * instance of this class.
 	 */
 	private class ThesaurusLineComparator implements Comparator<FileLine> {
+		
 		public int compare(FileLine l1, FileLine l2) {
 			String l1Key = l1.getString().split(":")[0];
 			String l2Key = l2.getString().split(":")[0];
@@ -59,7 +66,11 @@ public class ThesaurusRecord extends Record{
 	 */
     public void clear() {
 		key = null;
-		synonyms.clear();
+		try{
+			synonyms.clear();
+		}catch(NullPointerException ex){
+			//null pointer is caught
+		}
     }
 	
 	/**
@@ -98,6 +109,7 @@ public class ThesaurusRecord extends Record{
 			output+= s + ",";
 		return output;
 	}
+    
     
     private boolean isCleared() {
     	return (key == null && synonyms.size() == 0);
