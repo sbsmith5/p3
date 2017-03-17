@@ -64,6 +64,7 @@ public class WeatherRecord extends Record{
 			}
 		}
 		
+		//Not sure what this code does. It was part of the shell given to us.
 		public boolean equals(Object o) {
 			return this.equals(o);
 		}
@@ -125,7 +126,7 @@ public class WeatherRecord extends Record{
     			}
     		}
     		//if the station and date does not contain a reading for this file (aka reading type (i.e. DEWP, TEMP, etc.)), add a
-    		//null element to be turned into a '-' later.
+    		//null element to be turned into a '-' later, by the toString method.
     		else readings.add(null);
     	}
     	
