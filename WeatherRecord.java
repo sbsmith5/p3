@@ -25,8 +25,8 @@ public class WeatherRecord extends Record{
 	FileLine li;
 	private int station;
 	int date;
-	//double[] readings;
-	private ArrayList<Double> readings;
+	double[] readings;
+	//private ArrayList<Double> readings;
 	
 
 	/**
@@ -34,7 +34,8 @@ public class WeatherRecord extends Record{
 	 * and then calling the clear method()
 	 */
     public WeatherRecord(int numFiles) {
-		super(numFiles);
+		super(numFiles); // again, this calls the parent constructor
+		readings = new double[6];
 		clear();
     }
 	
@@ -85,8 +86,8 @@ public class WeatherRecord extends Record{
     public void clear() {
 		// TODO initialize/reset data members
     	try{
-    		for (int i=0; i<readings.size(); i++)
-    			readings.set(i, Double.MIN_VALUE);
+    		for (int i=0; i < readings.length ; i++)
+    			readings[i] = Double.MIN_VALUE;
     	}catch(NullPointerException e){
     		//nullPointerException is caught
     	}
@@ -109,26 +110,15 @@ public class WeatherRecord extends Record{
     		this.li = li;
     		this.station = Integer.parseInt(line[0]);
     		this.date = Integer.parseInt(line[1]);
-    		for (int i = 2; i < line.length; i++){
-    			readings.add(Double.parseDouble(line[i]));
+    		//for (int i = 2; i < line.length; i++){
+    			//readings.add(Double.parseDouble(line[i]));
     			
     			//if I took the data from the top of the file containing FileLine li, iterate li's iterator
-    			li.getFileIterator().next();
+    			//li.getFileIterator().next(); I think this should be iterated when you get the line as opposed to use the line
     		}
-    	}
-    	else{
-    		if (Integer.parseInt(li.getString().split(",")[0]) == this.station && Integer.parseInt(li.getString().split(",")[1]) == this.date){
-    			for (int i = 2; i < line.length; i++){
-    				readings.add(Double.parseDouble(line[i]));
-    				
-    				//if I took the data from the top of the file containing FileLine li, iterate li's iterator
-    				li.getFileIterator().next();
-    			}
-    		}
-    		//if the station and date does not contain a reading for this file (aka reading type (i.e. DEWP, TEMP, etc.)), add a
-    		//null element to be turned into a '-' later, by the toString method.
-    		else readings.add(null);
-    	}
+    	
+    	readings[li.getFileIterator().getIndex()] = Integer.parseInt(line[2]) ; // index is saved in the iterator, set this index to the data
+    	
     	
     	
     }
@@ -137,11 +127,24 @@ public class WeatherRecord extends Record{
 	 * See the assignment description and example runs for the exact output format.
 	 */
     public String toString() {
-		// TODO
+		String output = "";
+		for (int i = 0; i < readings.length; i++) {
+			if (readings[i] == Double.MIN_VALUE) output+= "-";
+			else output+= readings[i];
+			if (! (i == readings.length - 1) ) output+= ",";
+		}
 		
-		return null;
+		return output;
     }
-    private boolean isCleared() {
-    	return (station == 0 && date == 0 && readings.size() == 0);
+    public boolean isCleared() {
+    	return (station == 0 && date == 0 && readings.length == 0);
+    }
+    
+    public int getStation() {
+    	return station;
+    }
+    
+    public int getDate() {
+    	return date;
     }
 }

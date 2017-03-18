@@ -27,9 +27,7 @@ public class ThesaurusRecord extends Record{
 	 */
     public ThesaurusRecord(int numFiles) {
     	
-    	//Note super(numFiles); creates new object which is then lost
-    	
-    	super(numFiles); //TODO Note this disappears I don't know if it does anything
+    	super(numFiles); //this is the constructor; it works by calling the Record constructor that we extended
     	
     	clear();
     }
@@ -110,7 +108,7 @@ public class ThesaurusRecord extends Record{
 	}
     
     
-    private boolean isCleared() {
+    public boolean isCleared() {
     	return (key == null && synonyms.size() == 0);
     }
 }

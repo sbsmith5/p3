@@ -46,4 +46,10 @@ abstract class Record {
 	 * a way that is appropriate for the given application.
 	 */ 
     abstract public Comparator<FileLine> getComparator();
+    
+    /**
+	 * @eturn a boolean corresponding to whether or not the record has been cleared
+	 */ 
+    abstract public boolean isCleared();
+  
 }
