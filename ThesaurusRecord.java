@@ -29,8 +29,7 @@ public class ThesaurusRecord extends Record{
     	
     	//Note super(numFiles); creates new object which is then lost
     	
-    	super.numFiles = numFiles;	//TODO Note to do this we change
-    	//to change visibility of int to protected are we allowed to change this
+    	super(numFiles); //TODO Note this disappears I don't know if it does anything
     	
     	clear();
     }

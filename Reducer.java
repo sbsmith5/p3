@@ -11,6 +11,7 @@ public class Reducer {
     // list of files for stocking the PQ
     private List<FileIterator> fileList;
     private String type,dirName,outFile;
+    private Record r;
 
     public static void main(String[] args) {
 		if (args.length != 3) {
@@ -22,7 +23,10 @@ public class Reducer {
 		String dirName = args[1];
 		String outFile = args[2];
 
+		
+		
 		Reducer r = new Reducer(type, dirName, outFile);
+		
 		r.run();
 	
     }
@@ -43,11 +47,12 @@ public class Reducer {
     public void run() {
     	
     	
-		File dir = new File(dirName);
-		File[] files = dir.listFiles();
+    	
+		File dir = new File(dirName);	//where directory 
+		File[] files = dir.listFiles();	//list of input files
 		Arrays.sort(files);
 
-		Record r = null;
+		r = null;	//make our record null
 
 		// list of files for stocking the PQ
 		fileList = new ArrayList<FileIterator>();
@@ -60,6 +65,9 @@ public class Reducer {
 			}
 		}
 
+		
+		
+		//Generate our record
 	switch (type) {
 		case "weather":
 			r = new WeatherRecord(fileList.size());
@@ -72,24 +80,52 @@ public class Reducer {
 			System.exit(1);
 		}
 	
-	writeToFile(fileList);
-
+	//Create files for outputing and writing to memory
+	File output;
+	FileWriter writer = null;
+	
+	//create memory writer
+	try{
+		output = new File(outFile);
+		writer = new FileWriter(output);
+	}catch(Exception e){
+		System.out.println("IOE Exception thrown");
+	}
+	
+	//start process of acquiring synonyms
+	FileIterator iteratorToUse;
+	String stringToUse;
+	
+	//loop for all files in list
+	for(int i=0; i < fileList.size(); i++){
+		
+		iteratorToUse = fileList.get(i);
+		stringToUse = null;	//TODO Change null
+		//TODO is this right??
+		r.join( new FileLine(/*STRING*/stringToUse, iteratorToUse) );
+		
+		//TODO dont know if this should be here
+		writeToFile(writer);
+	
+	}
+	
+	//Close file
+	try {
+		writer.close();
+	} catch (IOException e) {
+		System.out.println("Error when closing file\nFile not closed");
+	}
+	
     }
     
     /*This method writes to the file output*/
-    public void writeToFile(List<FileIterator> files){
-    	
-    	File output;
-    	FileWriter writer;
+    public void writeToFile(FileWriter writer){
     	
     	try{
-    		output = new File(outFile);
-    		writer = new FileWriter(output);
-    	}catch(Exception e){
-    		System.out.println("IOE Exception thrown");
+    		writer.append(r.toString()+"\n");
+    	}catch(IOException e){
+    		System.out.println("failed to write to file");
     	}
-    	
-    	//TODO Write method that calls join and writes to file
     	
     }
     
