@@ -192,15 +192,14 @@ public class Reducer {
 					r.clear(); //removes all data from record
 					r.join(current); //adds current data to record
 					lastAdded = current;
-					if (current.getFileIterator().hasNext()) {
-						//inserts current item into priority queue and updates the iterator
-						priorityq.insert(current.getFileIterator().next());
-						//System.out.println("PRIORITYQUEUE");
-
-					}
-					if (priorityq.isEmpty()) { //to add last line to writer
-						this.writeToFile(writer);
-					}
+				}
+				if (current.getFileIterator().hasNext()) {
+					//inserts current item into priority queue and updates the iterator
+					priorityq.insert(current.getFileIterator().next());
+					//System.out.println("PRIORITYQUEUE");
+				}
+				if (priorityq.isEmpty()) { //to add last line to writer
+					this.writeToFile(writer);
 				}
 			}
 
