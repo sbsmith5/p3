@@ -7,6 +7,7 @@
 // Authors:
 // Author1: (Aleysha Becker,ambecker5@wisc.edu,ambecker5,001)
 // Author2: (Vanessa Chavez, vchavez2@wisc.edu, chavez, 001)
+// Author3: (Roberto O'Dogherty, rodogherty@wisc.edu, o-dogherty, 001)
 //
 //////////////////////////// 80 columns wide //////////////////////////////////
 
@@ -43,11 +44,14 @@ public class Reducer {
 		String dirName = args[1];
 		String outFile = args[2];
 
+		
 
 		//creates instance of reducer to merge data from files
 		Reducer r = new Reducer(type, dirName, outFile);
 		//start program
+		
 		r.run();
+		
 
     }
 
@@ -74,15 +78,16 @@ public class Reducer {
 		// list of files for stocking the PQ
 		fileList = new ArrayList<FileIterator>();
 
+		
+		
 		for(int i = 0; i < files.length; i++) {
 			//System.out.println(files[i].getAbsolutePath()); /*Check if correct files debugging*/
 			File f = files[i];
 			if(f.isFile() && f.getName().endsWith(".txt")) {
 				fileList.add(new FileIterator(f.getAbsolutePath(), i + 2)); //i + 2 for use in WeatherRecord
-				System.out.println(fileList.toString()); //checks list of files
+				//System.out.println(fileList.toString()); //checks list of files TEST CODE
 			}
 		}
-
 
 
 		//Generate our record
@@ -121,28 +126,13 @@ public class Reducer {
 	// initialize priorityQueue
 	priorityq =  new FileLinePriorityQueue(fileList.size(), cmp);
 
-	/* start process of acquiring synonyms
-	FileIterator iteratorToUse;
-	String stringToUse;
-
-	//loop for all files in list
-	for(int i=0; i < fileList.size(); i++){
-
-		iteratorToUse = fileList.get(i);
-		stringToUse = null;	//TODO Change null
-		//TODO is this right??
-		r.join( new FileLine(/*STRINGstringToUse, iteratorToUse) );
-
-		//TODO dont know if this should be here
-		writeToFile(writer);
-	} */
 
 
 	try {
-		System.out.println(fileList.size());
+		//System.out.println(fileList.size()); //TEST CODE
 		//for every file in the list, tries to add to priority queue
 		for (FileIterator iterator : fileList) {
-			System.out.println("ITERATOR INDEX: " + iterator.getIndex());
+			//System.out.println("ITERATOR INDEX: " + iterator.getIndex()); //TEST CODE
 			lastAdded = iterator.next(); //sets the iterator to next item & advances
 			priorityq.insert(lastAdded); //adds last line to the queue
 			//System.out.println("LAST ADDED: " + lastAdded.getString());
@@ -167,15 +157,15 @@ public class Reducer {
 
 			//System.out.println("CURRENT: " +current.getString());
 			if (r.isCleared()) { //if record is empty
-				System.out.println("Empty record in r");
+				//System.out.println("Empty record in r"); //TEST CODE
 				//parses content according to the type of data into correct format + adds
 				r.join(current);
 				lastAdded = current;
-				//System.out.println("IF: " + priorityq.isEmpty() + " " + current.getString());
+				//System.out.println("IF: " + priorityq.isEmpty() + " " + current.getString()); //TEST CODE
 			}
 			else {
 				//checks if they are equal
-				System.out.println(current.getString() +" =?= "+lastAdded.getString());
+				//System.out.println(current.getString() +" =?= "+lastAdded.getString()); //TEST CODE
 				if (cmp.compare(current, lastAdded) == 0) {
 					//System.out.println("values are both equal");
 					//System.out.println("CURRENT: " + current.getString() + " LASTADDED: "+ lastAdded.getString());
@@ -186,9 +176,9 @@ public class Reducer {
 
 				}
 				else {
-					System.out.println("values are unequal");
+					//System.out.println("values are unequal");//TEST CODE
 					this.writeToFile(writer); //writes to outputfile what was in record
-					System.out.println(r.toString());
+					//System.out.println(r.toString()); //TEST CODE
 					r.clear(); //removes all data from record
 					r.join(current); //adds current data to record
 					lastAdded = current;
@@ -209,13 +199,13 @@ public class Reducer {
 			e.printStackTrace();
 		}
 	}
-	System.out.println(priorityq.isEmpty());
+	//System.out.println(priorityq.isEmpty()); //TEST CODE
 	//Close file
 	try {
 		writer.close();
-		System.out.println("CLOSING WRITER" );
+		//System.out.println("CLOSING WRITER" ); //TEST CODE
 	} catch (IOException e) {
-		System.out.println("Error when closing file\nFile not closed");
+		System.out.println("Error when closing file\nFile not closed"); 
 	}
 
     }
@@ -224,7 +214,7 @@ public class Reducer {
     public void writeToFile(FileWriter writer){
 
     	try{
-    		writer.append(r.toString().substring(0,r.toString().length()-1)+"\n"); //writes data into output file
+    		writer.append(r.toString().substring(0,r.toString().length())+"\n"); //writes data into output file
     		// ===========================================================
     	}catch(IOException e){
     		System.out.println("failed to write to file");

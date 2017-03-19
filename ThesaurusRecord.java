@@ -66,9 +66,9 @@ public class ThesaurusRecord extends Record{
     public void clear() {
 		key = null;
 		try{
-			System.out.println("BEORE CLEAR synonyms: " + synonyms.toString());
+			//System.out.println("BEORE CLEAR synonyms: " + synonyms.toString()); //TEST CODE
 			synonyms.clear();
-			System.out.println("CLEAR synonyms: " + synonyms.toString());
+			//System.out.println("CLEAR synonyms: " + synonyms.toString()); //TEST CODE
 		}catch(NullPointerException ex){
 			//null pointer is caught
 		}

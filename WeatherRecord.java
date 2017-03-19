@@ -6,7 +6,7 @@
 // TEAM:    (Team 17, NEED TEAM NAME)
 // Author1: (Sidney Smith,sbsmith5@wisc.edu,sbsmith5,001)
 // Author2: (Aleysha Becker,ambecker5@wisc.edu,ambecker5,001)
-//
+// Author3: (Roberto O'Dogherty,rodogherty@wisc.edu,o-dogherty,001)
 // ---------------- OTHER ASSISTANCE CREDITS
 // Persons: N/A
 //
@@ -24,7 +24,7 @@ import java.util.Comparator;
 public class WeatherRecord extends Record{
 	FileLine li;
 	private int station;
-	int date;
+	private int date;
 	double[] readings;
 	//private ArrayList<Double> readings;
 	
@@ -106,7 +106,7 @@ public class WeatherRecord extends Record{
     	//create an array of the strings in FileLine li
     	String[] line = li.getString().split(",");
     	
-    	if (this.isCleared()) {
+    	if (!isCleared()) {
     		this.li = li;
     		this.station = Integer.parseInt(line[0]);
     		this.date = Integer.parseInt(line[1]);
@@ -117,7 +117,7 @@ public class WeatherRecord extends Record{
     			//li.getFileIterator().next(); I think this should be iterated when you get the line as opposed to use the line
     		}
     	
-    	readings[li.getFileIterator().getIndex()] = Integer.parseInt(line[2]) ; // index is saved in the iterator, set this index to the data
+    	readings[li.getFileIterator().getIndex()] = Double.parseDouble(line[2]) ; // index is saved in the iterator, set this index to the data
     	
     	
     	
@@ -128,7 +128,10 @@ public class WeatherRecord extends Record{
 	 */
     public String toString() {
 		String output = "";
-		for (int i = 0; i < readings.length; i++) {
+		
+		output+= station + ","+ date +",";	//ensure date and station are not added as "-"
+		
+		for (int i = 2; i < readings.length; i++) {
 			if (readings[i] == Double.MIN_VALUE) output+= "-";
 			else output+= readings[i];
 			if (! (i == readings.length - 1) ) output+= ",";

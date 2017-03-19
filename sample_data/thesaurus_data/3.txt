@@ -1,2 +1,2 @@
-good:satisfactory,peachy,not bad
-okay:alright
+good:satisfactory,peachy,not bad,
+okay:alright,

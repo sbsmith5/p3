@@ -78,7 +78,7 @@ public class FileLinePriorityQueue implements MinPriorityQueueADT<FileLine> {
 //    		}
 //    	}
     	FileLine temp;
-    	System.out.println("numitems: "+numItems);
+    	//System.out.println("numitems: "+numItems); //TEST CODE
     	// adds value if queue is empty
     	if (numItems == 0) {
     		queue[0] = fl;

@@ -1,2 +1,2 @@
-bad:lamentable,sorry,rotten
-okay:fine
+bad:lamentable,sorry,rotten,
+okay:fine,
