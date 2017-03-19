@@ -6,7 +6,7 @@
 // TEAM:    Team 17
 // Authors:
 // Author1: (Aleysha Becker,ambecker5@wisc.edu,ambecker5,001)
-// Author2: (Vanessa Chavez, vchvez2@wisc.edu, vchavez, 001)
+// Author2: (Vanessa Chavez, vchavez2@wisc.edu, chavez, 001)
 //
 //////////////////////////// 80 columns wide //////////////////////////////////
 
@@ -79,6 +79,7 @@ public class Reducer {
 			File f = files[i];
 			if(f.isFile() && f.getName().endsWith(".txt")) {
 				fileList.add(new FileIterator(f.getAbsolutePath(), i + 2)); //i + 2 for use in WeatherRecord
+				System.out.println(fileList.toString()); //checks list of files
 			}
 		}
 
@@ -97,7 +98,8 @@ public class Reducer {
 		default:
 			System.out.println("Invalid type of data! " + type);
 			System.exit(1);
-		}
+			break;
+	}
 
 
     // get comparator
@@ -117,7 +119,7 @@ public class Reducer {
 	}
 
 	// initialize priorityQueue
-		priorityq =  new FileLinePriorityQueue(fileList.size(), cmp);
+	priorityq =  new FileLinePriorityQueue(fileList.size(), cmp);
 
 	/* start process of acquiring synonyms
 	FileIterator iteratorToUse;
@@ -133,8 +135,9 @@ public class Reducer {
 
 		//TODO dont know if this should be here
 		writeToFile(writer);
-
 	} */
+
+
 	try {
 		System.out.println(fileList.size());
 		//for every file in the list, tries to add to priority queue
@@ -142,53 +145,76 @@ public class Reducer {
 			System.out.println("ITERATOR INDEX: " + iterator.getIndex());
 			lastAdded = iterator.next(); //sets the iterator to next item & advances
 			priorityq.insert(lastAdded); //adds last line to the queue
-			System.out.println("LAST ADDED: " + lastAdded.getString());
-			System.out.println(priorityq.isEmpty());
+			//System.out.println("LAST ADDED: " + lastAdded.getString());
+			//System.out.println(priorityq.isEmpty());
 		}
 	}
 	catch (PriorityQueueFullException e) {
 		e.printStackTrace();
 	}; //if full, cannot be added
 
-	System.out.println(priorityq.isEmpty());
+	//System.out.println(priorityq.isEmpty());
 	// if true above loop sucks ========================================
+
+
+//TODO: ITERATES THROUGH FIRST LINE OF EACH FILE BUT DOES NOT GO THROUGH ANY OTHER LINES IN EACH FILE???
+//example: Only takes first line from each txt file from weather but does not take any other lines from each file
 
 	while (!priorityq.isEmpty()) {
 		try {
-			//remove last entry and writes it to the file
+			//remove last entry to be added to output file
 			FileLine current = priorityq.removeMin();
-			if (r.isCleared()) {
-				//parses content according to the type of data into correct format
+
+			//System.out.println("CURRENT: " +current.getString());
+			if (r.isCleared()) { //if record is empty
+				System.out.println("Empty record in r");
+				//parses content according to the type of data into correct format + adds
 				r.join(current);
 				lastAdded = current;
+				//System.out.println("IF: " + priorityq.isEmpty() + " " + current.getString());
 			}
 			else {
+				//checks if they are equal
+				System.out.println(current.getString() +" =?= "+lastAdded.getString());
 				if (cmp.compare(current, lastAdded) == 0) {
+					//System.out.println("values are both equal");
+					//System.out.println("CURRENT: " + current.getString() + " LASTADDED: "+ lastAdded.getString());
 					r.join(current);
+					//System.out.println("RECORD: " + r.toString());
 					lastAdded = current;
+					//System.out.println(priorityq.isEmpty());
+
 				}
 				else {
-					this.writeToFile(writer); //once all data has been parsed
-					r.clear(); //removes all data
-					r.join(current); //adds current to empty record
-					lastAdded = current; //updates the last added item
+					System.out.println("values are unequal");
+					this.writeToFile(writer); //writes to outputfile what was in record
+					System.out.println(r.toString());
+					r.clear(); //removes all data from record
+					r.join(current); //adds current data to record
+					lastAdded = current;
 					if (current.getFileIterator().hasNext()) {
 						//inserts current item into priority queue and updates the iterator
 						priorityq.insert(current.getFileIterator().next());
+						//System.out.println("PRIORITYQUEUE");
 
+					}
+					if (priorityq.isEmpty()) { //to add last line to writer
+						this.writeToFile(writer);
 					}
 				}
 			}
+
 		} catch (PriorityQueueFullException e) {
 			e.printStackTrace();
 		} catch (PriorityQueueEmptyException e) {
 			e.printStackTrace();
 		}
 	}
-
+	System.out.println(priorityq.isEmpty());
 	//Close file
 	try {
 		writer.close();
+		System.out.println("CLOSING WRITER" );
 	} catch (IOException e) {
 		System.out.println("Error when closing file\nFile not closed");
 	}
@@ -199,7 +225,7 @@ public class Reducer {
     public void writeToFile(FileWriter writer){
 
     	try{
-    		writer.append(r.toString()+"end!X!\n"); //writes data into output file
+    		writer.append(r.toString().substring(0,r.toString().length()-1)+"\n"); //writes data into output file
     		// ===========================================================
     	}catch(IOException e){
     		System.out.println("failed to write to file");

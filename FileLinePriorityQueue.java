@@ -83,7 +83,7 @@ public class FileLinePriorityQueue implements MinPriorityQueueADT<FileLine> {
     	if (numItems == 0) {
     		queue[0] = fl;
     		++numItems;
-    		System.out.println("added first value");
+    		//System.out.println("added first value");
     		return;
     	}
 
@@ -94,10 +94,10 @@ public class FileLinePriorityQueue implements MinPriorityQueueADT<FileLine> {
     			temp = queue[i];
     			queue[i] = fl;
     			fl = temp;
-    			System.out.println("compare run on i = "+i);
+    			//System.out.println("compare run on i = "+i);
     		}
     	}
-
+    	
     	// to add final value from for loop
     	queue[numItems] = fl;
 

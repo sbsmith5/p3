@@ -10,6 +10,8 @@
 //
 //////////////////////////// 80 columns wide //////////////////////////////////
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 
 /**
@@ -64,7 +66,9 @@ public class ThesaurusRecord extends Record{
     public void clear() {
 		key = null;
 		try{
+			System.out.println("BEORE CLEAR synonyms: " + synonyms.toString());
 			synonyms.clear();
+			System.out.println("CLEAR synonyms: " + synonyms.toString());
 		}catch(NullPointerException ex){
 			//null pointer is caught
 		}
@@ -76,23 +80,65 @@ public class ThesaurusRecord extends Record{
 	 */
     public void join(FileLine w) {
     	if (this.isCleared()) {
+    		//System.out.println("W. GET STRING: " +w.getString().split(":")[0]);
+    		//System.out.println(" GET STRING SPLIT: " +w.getString().split(":")[1]);
     		key = w.getString().split(":")[0];
     		String fileLineString = w.getString().split(":")[1];
     		String[] newSynonyms = fileLineString.split(",");
-    		for (int i = 0; i < newSynonyms.length; i++) synonyms.add(newSynonyms[i]);
+    		//System.out.println("NEWSYNNYMS ARRAY: " + Arrays.toString(newSynonyms));
+    		for (int i = 0; i < newSynonyms.length; i++) synonyms.add(newSynonyms[i]); //adds words all to synonym list
+    		//System.out.println("SYNONYMS: " +synonyms);
     	}
     	else {
 			String fileLineString = w.getString();
+			//System.out.println("ELSE, w.getString(): "+w.getString());
 			fileLineString = fileLineString.split(":")[1];
+			//System.out.println(" GET STRING SPLIT: " +w.getString().split(":")[1]);
 			String[] newSynonyms = fileLineString.split(",");
+			//System.out.println("NEWSYNNYMS ARRAY: " + Arrays.toString(newSynonyms));
+			//System.out.println("SYNONYMS: " +synonyms);
+			//System.out.println("syn: "+synonyms.toString());
+
+    	Arrays.sort(newSynonyms); //sorts array to compare
+    	//System.out.println("NEW SYN ARRAY IN ORDER: "+ Arrays.toString(newSynonyms));
+    	Collections.sort(synonyms); //sorts to compare
+    	//System.out.println("SYONYM ARRAYLIST IN ORDER");
+
+			//COMPARES ALL TO EACH OTHER AND ADDS IN RIGHT ORDER TO RECORD//
 			for (int i = 0; i < newSynonyms.length; i++) {
-				for (String s : synonyms) {
-					if (newSynonyms[i].compareTo(s) == 0) break;
-					else if (newSynonyms[i].compareTo(s) > 0) continue;
-					else if (newSynonyms[i].compareTo(s) < 0) synonyms.add(synonyms.indexOf(s), newSynonyms[i]);
+
+//				for (String s : synonyms) {
+//					if (newSynonyms[i].compareTo(s) == 0) break;
+//					else if (newSynonyms[i].compareTo(s) > 0) continue;
+//					else if (newSynonyms[i].compareTo(s) < 0) synonyms.add(synonyms.indexOf(s), newSynonyms[i]);
+//				}
+				for (int j = 0; j < synonyms.size(); ++j) {
+					if (newSynonyms[i].compareTo(synonyms.get(j)) == 0) {
+						//System.out.println("=0 LOOP: " + newSynonyms[i] + synonyms.get(j));
+						j = 0;
+						break; //if the same leaveloop
+					}
+					else if (newSynonyms[i].compareTo(synonyms.get(j)) > 0) {
+						//System.out.println("newsyn>syn: " + newSynonyms[i] + synonyms.get(j));
+						if (j == synonyms.size()-1){ //adds to end if furthest in alphabetical order
+							//System.out.println("REACHED THE END, ADDING TO END");
+							synonyms.add(newSynonyms[i]);
+						}
+						continue;
+					}
+					else if (newSynonyms[i].compareTo(synonyms.get(j)) < 0) {
+						//System.out.println("newsyn < syn: " + newSynonyms[i] + synonyms.get(j) + synonyms);
+						synonyms.add(synonyms.indexOf(synonyms.get(j)), newSynonyms[i]); //adds at right index
+						//System.out.println("newsyn < syn: " + newSynonyms[i] + synonyms.get(j) + synonyms);
+						break;
+					}
+
 				}
 			}
     	}
+    	Collections.sort(synonyms); //SORT ARRAYLIST IN ALPPHABETICAL ORDER
+    	//System.out.println("SYONYM ARRAYLIST IN ORDER");
+
     	/// this assumes that the method calling join will have already checked that the keys matched ***
     }
 
