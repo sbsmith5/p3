@@ -178,7 +178,7 @@ public class Reducer {
 					else {
 						//System.out.println(current.getString() +" =?= "+lastAdded.getString()); //Test Code
 						//System.out.println("values are unequal");//TEST CODE
-						//this.writeToFile(writer); //writes to outputfile what was in record
+						this.writeToFile(writer); //writes to outputfile what was in record
 						//System.out.println(r.toString()); //TEST CODE
 						r.clear(); //removes all data from record
 						r.join(current); //adds current data to record
@@ -216,7 +216,7 @@ public class Reducer {
 
 		try{
 			writer.append(r.toString().substring(0,r.toString().length()-1)+"\n"); //writes data into output file
-			//System.out.println(priorityq.isEmpty()+" : "+r.toString()); //Test Code
+			//System.out.println(priorityq.isEmpty()+" : "+r.toString()); 
 			// ===========================================================
 		}catch(IOException e){
 			System.out.println("failed to write to file");
