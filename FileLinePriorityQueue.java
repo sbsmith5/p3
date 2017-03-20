@@ -3,8 +3,7 @@
 // PROJECT:          p3
 // FILE:             FileLinePriorityQueue
 //
-// TEAM:    we need a team name still guys
-// Authors:
+// TEAM:    Team 17
 // Author1: (Aleysha Becker,ambecker5@wisc.edu,ambecker5,001)
 // Author2: (Sidney Smith,sbsmith5@wisc.edu,sbsmith5,001)
 // Author3: (Vanessa Chavez, vchavez2@wisc.edu, chavez, 001)
@@ -20,32 +19,31 @@ import java.util.Comparator;
  *
  */
 public class FileLinePriorityQueue implements MinPriorityQueueADT<FileLine> {
-	// TODO
-	private FileLine[] queue; //
-	private Comparator<FileLine> cmp;
-	private int maxSize;
-	private int numItems; //
+	private FileLine[] queue; //the priority queue to be used
+	private Comparator<FileLine> cmp; //the comparator that chooses the order of items
+	private int maxSize; //the maximum size of the queue
+	private int numItems; //number of items in queue
 
+	/**
+	 * The constructor initializes the comparator, the maximum size of the queue, initializes the queue according
+	 * to the maximum size, and sets the number of items in the queue.
+	 *@param initalsize - the start size of the queue
+	 *@param cmp - the comparator used to compare the priority of each item
+	 */
 	public FileLinePriorityQueue(int initialSize, Comparator<FileLine> cmp) {
 		this.cmp = cmp;
 		maxSize = initialSize;
-		queue = new FileLine[maxSize]; //
-		numItems = 0; //
-
-		// TODO
+		queue = new FileLine[maxSize];
+		numItems = 0;
 	}
-
+	/**
+	 * This method removes and returns last-priority item in the queue.
+	 * @throws PriorityQueueEmptyException - if there are no items stored in queue
+	 * @return temp - the FileLine object of minimum priority that is removed
+	 */
 	public FileLine removeMin() throws PriorityQueueEmptyException {
-		//    	if (numItems <= 0) throw new PriorityQueueEmptyException();
-		//		FileLine temp = queue[0];
-		//		queue[0] = null;
-		//		numItems--;
-		//		return temp;
 
 		if (numItems <= 0) throw new PriorityQueueEmptyException();
-		// while not at end of array/number of items
-		// overwrite [0] with one
-		// increment up
 		int i = 0; // removing index 0
 		FileLine temp = queue[0]; // return initial item
 		while (i + 1 < queue.length && i+1 < numItems) {
@@ -56,55 +54,40 @@ public class FileLinePriorityQueue implements MinPriorityQueueADT<FileLine> {
 		queue[numItems] = null; // remove duplicated item at end of list that was not overwritten
 		return temp;
 	}
-
+	/**
+	 * This method inserts a FileLine object into the queue in the correct position according to its
+	 * priority and updates the number of items in teh queue
+	 * @param fl - the FileLine to be inserted into the queue
+	 * @throws PriorityQueueFullException - if the queue is full
+	 */
 	public void insert(FileLine fl) throws PriorityQueueFullException {
 		if (numItems >= maxSize) throw new PriorityQueueFullException(); //if it's full
-		//    	int i = 0;
-		//    	while (queue[i] != null) i++; //finds where queue is null
-		//    	queue[i] = fl; //adds passed in FileLine to non-full index
-		//    	for (int j = i+1; j < numItems; j++) {
-		//    		//finds where to place the passed in FileLine
-		//    		if (cmp.compare(queue[i], queue[j]) < 0) {
-		//    			//places the passed in FileLine in correct position according to ProrityQueue
-		//    			FileLine temp = queue[i];
-		//    			queue[i] = queue[j];
-		//    			queue[j] = temp;
-		//    			i++;
-		//    			// j < maxSize with break at queue[j] == null
-		//    		}
-		//
-		//    		else {
-		//    			numItems++;
-		//    			break;
-		//    		}
-		//    	}
 		FileLine temp;
-		//System.out.println("numitems: "+numItems); //TEST CODE
-		// adds value if queue is empty
 		if (numItems == 0) {
 			queue[0] = fl;
 			++numItems;
-			//System.out.println("added first value");
 			return;
 		}
 
 		// have to add in order
 		for (int i = 0; i < numItems; ++i) {
 			if (cmp.compare(queue[i], fl) > 0) {
-				// is more alphabetical, must add fl and then start moving it down
+				// is more alphabetical, must add fl and then shift down
 				temp = queue[i];
 				queue[i] = fl;
 				fl = temp;
-				//System.out.println("compare run on i = "+i);
 			}
 		}
 
 		// to add final value from for loop
 		queue[numItems] = fl;
 
-		++numItems; // increment queue
+		++numItems; // increment number of items in queue
 	}
-
+	/**
+	 * Checks if there are any items stored in the queue.
+	 * @return true if no items in queue, false if there are still items in queue
+	 */
 	public boolean isEmpty() {
 		return (numItems == 0);
 	}
