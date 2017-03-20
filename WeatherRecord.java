@@ -137,7 +137,7 @@ public class WeatherRecord extends Record{
 			if (! (i == readings.length - 1) ) output+= ",";
 		}
 		
-		return output;
+		return output + "0";
     }
     public boolean isCleared() {
     	return (station == 0 && date == 0 && readings.length == 0);
