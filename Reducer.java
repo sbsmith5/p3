@@ -36,7 +36,7 @@ public class Reducer {
 
 	public static void main(String[] args) {
 		if (args.length != 3) { //if command-line arguments are not added correctly
-			System.out.println("Usage: java Reducer <weather|thesaurus> <dir_name> <output_file>");
+			//System.out.println("Usage: java Reducer <weather|thesaurus> <dir_name> <output_file>"); //Test Code
 			System.exit(1); //stop the program
 		}
 		//assigns command-line arguments with all types
@@ -136,7 +136,7 @@ public class Reducer {
 				if (iterator.hasNext()) {
 					lastAdded = iterator.next(); //sets the iterator to next item & advances
 					priorityq.insert(lastAdded); //adds last line to the queue
-					System.out.println("LAST ADDED: " + lastAdded.getString());
+					//System.out.println("LAST ADDED: " + lastAdded.getString()); //Test Code
 					//System.out.println(priorityq.isEmpty());
 				}
 			}
@@ -154,7 +154,7 @@ public class Reducer {
 				//remove last entry to be added to output file
 				FileLine current = priorityq.removeMin();
 
-				System.out.println("CURRENT: " +current.getString());
+				//System.out.println("CURRENT: " +current.getString());
 
 				if (r.isCleared()) { //if record is empty
 //					System.out.println("Empty record in r"); //TEST CODE
@@ -165,9 +165,9 @@ public class Reducer {
 				}
 				else {
 					//checks if they are equal
-					System.out.println(current.getString() +" =?= "+lastAdded.getString());
+					//System.out.println(current.getString() +" =?= "+lastAdded.getString()); //Test Code
 					if (cmp.compare(current, lastAdded) == 0) {
-						System.out.println("values are both equal");
+						//System.out.println("values are both equal"); //Test Code
 						//System.out.println("CURRENT: " + current.getString() + " LASTADDED: "+ lastAdded.getString());
 						r.join(current);
 						//System.out.println("RECORD: " + r.toString());
@@ -176,10 +176,10 @@ public class Reducer {
 
 					}
 					else {
-						System.out.println(current.getString() +" =?= "+lastAdded.getString());
-						System.out.println("values are unequal");//TEST CODE
-						this.writeToFile(writer); //writes to outputfile what was in record
-						System.out.println(r.toString()); //TEST CODE
+						//System.out.println(current.getString() +" =?= "+lastAdded.getString()); //Test Code
+						//System.out.println("values are unequal");//TEST CODE
+						//this.writeToFile(writer); //writes to outputfile what was in record
+						//System.out.println(r.toString()); //TEST CODE
 						r.clear(); //removes all data from record
 						r.join(current); //adds current data to record
 						lastAdded = current;
@@ -216,7 +216,7 @@ public class Reducer {
 
 		try{
 			writer.append(r.toString().substring(0,r.toString().length()-1)+"\n"); //writes data into output file
-			System.out.println(priorityq.isEmpty()+" : "+r.toString());
+			//System.out.println(priorityq.isEmpty()+" : "+r.toString()); //Test Code
 			// ===========================================================
 		}catch(IOException e){
 			System.out.println("failed to write to file");

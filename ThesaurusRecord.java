@@ -100,9 +100,9 @@ public class ThesaurusRecord extends Record{
 			//System.out.println("syn: "+synonyms.toString());
 
     	Arrays.sort(newSynonyms); //sorts array to compare
-    	System.out.println("NEW SYN ARRAY IN ORDER: "+ Arrays.toString(newSynonyms));
+    	//System.out.println("NEW SYN ARRAY IN ORDER: "+ Arrays.toString(newSynonyms));//Test Code
     	Collections.sort(synonyms); //sorts to compare
-    	System.out.println("SYONYM ARRAYLIST IN ORDER" + synonyms.toString());
+    	//System.out.println("SYONYM ARRAYLIST IN ORDER" + synonyms.toString());//Test Code
 
 			//COMPARES ALL TO EACH OTHER AND ADDS IN RIGHT ORDER TO RECORD//
 			for (int i = 0; i < newSynonyms.length; i++) {
